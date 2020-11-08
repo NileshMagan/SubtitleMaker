@@ -1,12 +1,11 @@
 import csv
 
 def writeToCSV(filename, subtitleData):
-    # with open('output.csv', mode='w', newline='') as output_file:
     with open(filename, mode='w', newline='') as output_file:
         print('--------- STARTING WRITING ---------')
         file_writer = csv.writer(output_file, delimiter='|', quoting=csv.QUOTE_NONE)
         code = ''
-        lengthOfData = len(subtitleData)
+        lengthOfData = len(subtitleData) - 1
         for index, sub in enumerate(subtitleData):
             if (index > 0):
                 # print (str(sub.index))

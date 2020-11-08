@@ -2,13 +2,10 @@ import datetime
 import math
 import string
 import random
-# import Subtitle from Subtitle
 from Subtitle import Subtitle
 
-def createSubtitleData(amplitudes, sampleRate):
-    threshold = 0.25
-    minSecondsApart = datetime.timedelta(seconds=2)
-
+def createSubtitleData(amplitudes, sampleRate, threshold, minimumTimeBetweenEachSubtitle):
+    minSecondsApart = datetime.timedelta(seconds=minimumTimeBetweenEachSubtitle)
     numberOfPoints = len(amplitudes)
     totalTime = datetime.timedelta(seconds=(numberOfPoints / sampleRate))
     timeIncrement = datetime.timedelta(seconds=(1 / sampleRate))
@@ -17,7 +14,6 @@ def createSubtitleData(amplitudes, sampleRate):
     timestamp = sampleRate
 
     itr = 1
-    # finalTimes = [Subtitle(itr, iteratingTime, generateRandomChar())]
     finalTimes = [Subtitle(0, "00:00:00,000", generateRandomChar())]
     print('--------- STARTING PROCESSING ---------')
     lengthOfData = len(amplitudes)
@@ -28,37 +24,7 @@ def createSubtitleData(amplitudes, sampleRate):
                 itr += 1
                 prevTime = iteratingTime
         iteratingTime += timeIncrement
-        # else:
-        #     index = 200000
         print('Processed (' + str(index) + '/' + str(lengthOfData) + ')')
-        # if (index > 200000):
-        #     break
-
-    # for index, sub in enumerate(finalTimes):
-
-    #     # if (index > 0)
-
-    #     # print(iteratingTime)
-    #     # print(str(math.floor(iteratingTime.seconds)))
-    #     # print(iteratingTime.seconds)
-    #     # print(iteratingTime.total_seconds())
-    #     hours = '00'
-    #     try:
-    #         hours = '{:02d}'.format(math.floor(iteratingTime.seconds/(60 * 60)))
-    #     except:
-    #         pass
-    #     minutes = '00'
-    #     try:
-    #         minutes = '{:02d}'.format(math.floor(iteratingTime.seconds/60) % 60)
-    #     except:
-    #         pass
-    #     seconds = '{:02d}'.format(iteratingTime.seconds % 60)
-    #     milli = '000'
-    #     if (len(str(iteratingTime.microseconds)) > 1):
-    #         milli = str(iteratingTime.microseconds/1000)[0:3]
-    #     print(str(index) + ': ' + hours + ':' + minutes + ':' + seconds + ',' + milli)
-    #     currentTimstamp = (hours + ':' + minutes + ':' + seconds + ',' + milli)
-    #     iteratingTime += timeIncrement
     return finalTimes
 
 def formatTimeStamp(time):
@@ -76,10 +42,8 @@ def formatTimeStamp(time):
     milli = '000'
     if (len(str(time.microseconds)) > 1):
         milli = str(time.microseconds/1000)[0:3]
-    # print(str(index) + ': ' + hours + ':' + minutes + ':' + seconds + ',' + milli)
     currentTimstamp = (hours + ':' + minutes + ':' + seconds + ',' + milli)
     return currentTimstamp
-    # iteratingTime += timeIncrement
 
 def generateRandomChar():
     chars = string.ascii_uppercase + string.digits
@@ -100,18 +64,3 @@ def checkIfTimeIsDistant(t1, t2, minTimeApart):
     if ((t2 - t1) >= minTimeApart):
         return True
     return False
-
-
-
-# def detectRisingEdge(p1, p2, thresh):
-#     if ((p2 - p1) > thresh) {
-#         return true
-#     }
-#     return false
-
-
-
-
-amplitudes = [1,2,3,4,5,6,7,8,9,10]
-sr = 3
-createSubtitleData(amplitudes, sr)
